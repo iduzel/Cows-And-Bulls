@@ -1,21 +1,23 @@
 let secretDigits;
 let playerDigits;
 
-// to run 'ENTER' key 'CHECK' button
+let counterWrap = document.getElementById('counter')
+
+// to run 'ENTER' key at 'CHECK' button
 
 let formSubmit = document.getElementById('guess')
-formSubmit.onkeydown = function(e) {
+formSubmit.onkeydown = function (e) {
 
-    if(e.keyCode == 13) {
-        e.preventDefault() 
-        guessClick()       
+    if (e.keyCode == 13) {
+        e.preventDefault()
+        guessClick()
     }
 }
 
- // SECRET NUMBER
+// SECRET NUMBER
 function get4digitNumber() {
     let numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-   
+
     let fourDigitsNumber = []
     for (let i = 0; i < 4; i++) {
         let randomNumber = numbers[Math.floor(Math.random() * numbers.length)]
@@ -27,18 +29,17 @@ function get4digitNumber() {
 }
 
 secretDigits = get4digitNumber()
-function onLoad(){
+
+function onLoad() {
     //secretDigits = get4digitNumber()
 }
-console.log("🚀 ~ file: index.js ~ line 24 ~ secretDigits", secretDigits)
-
 
 let secretNumberWrap = document.getElementById('secretNumber')
 
 secretNumberWrap.innerHTML = 'SECRET NUMBER IS : ' + secretDigits.join('')
 
 
-
+// REFRESH THE PAGE
 function restart() {
 
     location.reload()
@@ -70,24 +71,24 @@ function guess(number) {
     // USER GUESS
 
     let userNumber = number
-    //prompt('Enter Your Guess: ')
+
+    // Check if the user number is equal to 4 or not
     if (userNumber.length !== 4) {
         return console.log('Enter a 4-Digit Number!!!')
     }
 
-
+    // Convert user number to array
     var userArray = String(userNumber).split("").map((num) => {
         return Number(num)
     })
 
 
     // ARRAY OF 2 DATAS
-
-    playerDigits = userArray    
-
+    playerDigits = userArray
 
 
-    // CHECK SECRET NUMBERS INCLUDES ANY DIGIT OR NOT
+
+    // CHECK SECRET NUMBER INCLUDES ANY DIGIT OF USER NUMBER OR NOT
     let counter = 0
 
     for (let i = 0; i < playerDigits.length; i++) {
@@ -96,12 +97,14 @@ function guess(number) {
         }
     }
 
+    counterWrap.innerHTML = 'Counter: '+ counter
+
     if (counter === 0) {
-        console.log('Not even 1 matches')
+        return resultWrap.innerHTML ='Not even 1 matches'
+        
     }
 
     // GET BULLS AND COWS
-
     for (let i = 0; i < 4; i++) {
 
         if (playerDigits.includes(secretDigits[i]) && secretDigits[i] === playerDigits[i]) {
@@ -113,10 +116,7 @@ function guess(number) {
     }
 
 
-    //secretDigits = +secretDigits.join('')
-    console.log("secretDigits : ", secretDigits)
-    //playerDigits = +playerDigits.join('')
-    console.log("playerDigits : ", playerDigits)
+ 
 
 
     if (secretDigits.join('') == playerDigits.join('')) {
@@ -138,6 +138,3 @@ function guess(number) {
 
 
 }
-
-
-
